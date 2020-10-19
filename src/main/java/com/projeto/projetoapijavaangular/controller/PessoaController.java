@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,39 +17,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.projeto.projetoapijavaangular.model.Categoria;
-import com.projeto.projetoapijavaangular.repository.CategoriaRepository;
-
+import com.projeto.projetoapijavaangular.model.Pessoa;
+import com.projeto.projetoapijavaangular.repository.PessoaRepository;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaController {
+@RequestMapping("/pessoas")
+public class PessoaController {
 
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private PessoaRepository pessoaRepository;
 	
 	@GetMapping
-	public List<Categoria> listar(){
-	return categoriaRepository.findAll();
+	public List<Pessoa> listar(){
+	return pessoaRepository.findAll();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> criar(@Validated @RequestBody Categoria categoria, HttpServletResponse response) {
-		Categoria categoriaSalva = categoriaRepository.save(categoria);
+	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
-		.buildAndExpand(categoriaSalva.getCodigo()).toUri();
+				.buildAndExpand(pessoaSalva.getCodigo()).toUri();
 		response.setHeader("Location", uri.toASCIIString());
 		
-		return ResponseEntity.created(uri).body(categoriaSalva);
+		return ResponseEntity.created(uri).body(pessoaSalva);
 	}
-	
 	
 	@GetMapping("/{codigo}")
-	public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
-		Optional<Categoria> categoria = categoriaRepository.findById(codigo);
-		
-		return !categoria.isEmpty() ? ResponseEntity.ok().body(categoria) : ResponseEntity.notFound().build() ;
+	public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo){
+		Optional<Pessoa> pessoa = pessoaRepository.findById(codigo);
+		return pessoa.isPresent() ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
 	}
-	
 }
