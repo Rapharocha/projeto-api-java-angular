@@ -1,12 +1,13 @@
 package com.projeto.projetoapijavaangular.controller;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.projeto.projetoapijavaangular.event.RecursoCriadoEvent;
 import com.projeto.projetoapijavaangular.model.Categoria;
 import com.projeto.projetoapijavaangular.repository.CategoriaRepository;
 
@@ -28,6 +29,9 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
+	@Autowired
+	private ApplicationEventPublisher publisher;
+	
 	@GetMapping
 	public List<Categoria> listar(){
 	return categoriaRepository.findAll();
@@ -37,11 +41,9 @@ public class CategoriaController {
 	public ResponseEntity<Categoria> criar(@Validated @RequestBody Categoria categoria, HttpServletResponse response) {
 		Categoria categoriaSalva = categoriaRepository.save(categoria);
 		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
-		.buildAndExpand(categoriaSalva.getCodigo()).toUri();
-		response.setHeader("Location", uri.toASCIIString());
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
 		
-		return ResponseEntity.created(uri).body(categoriaSalva);
+		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
 	}
 	
 	
