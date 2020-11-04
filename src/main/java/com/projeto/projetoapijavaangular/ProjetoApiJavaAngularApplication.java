@@ -9,5 +9,5 @@ public class ProjetoApiJavaAngularApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoApiJavaAngularApplication.class, args);
 	}
-
+	
 }
