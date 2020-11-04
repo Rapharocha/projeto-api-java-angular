@@ -30,6 +30,7 @@ import com.projeto.projetoapijavaangular.exceptionhandler.ExceptionHandle.Erro;
 import com.projeto.projetoapijavaangular.model.Lancamento;
 import com.projeto.projetoapijavaangular.repository.LancamentoRepository;
 import com.projeto.projetoapijavaangular.repository.filter.LancamentoFilter;
+import com.projeto.projetoapijavaangular.repository.projection.ResumoLancamento;
 import com.projeto.projetoapijavaangular.service.LancamentoService;
 import com.projeto.projetoapijavaangular.service.exception.PessoaInexistenteOuInativaException;
 
@@ -49,10 +50,17 @@ public class LancamentoController {
 	@Autowired
 	private MessageSource messageSource;
 	
+	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable){
 		return lancamentoRepository.filtrar(lancamentoFilter, pageable);
+	}
+	
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable){
+		return lancamentoRepository.resumir(lancamentoFilter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")
