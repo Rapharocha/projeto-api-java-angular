@@ -15,7 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
@@ -130,25 +130,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
-			<plugin>
-	            <groupId>org.springframework.boot</groupId>
-	            <artifactId>spring-boot-maven-plugin</artifactId>
-	            <configuration>
-	             <finalName>${project.name}</finalName>
-	            </configuration>
-	             <executions>
-	               <execution>
-	                      <goals>
-	                           <goal>repackage</goal>
-	                     </goals>
-	               </execution>
-	              </executions>
-	         </plugin>
 		</plugins>
-		
-	
-	    
-	  
+
 	</build>
 
 </project>
