@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "projeto-api-java",
+      "type": "com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty",
+      "sourceType": "com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty"
+    },
+    {
+      "name": "projeto-api-java.seguranca",
+      "type": "com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty$Seguranca",
+      "sourceType": "com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty",
+      "sourceMethod": "public com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty.Seguranca getSeguranca() "
+    }
+  ],
+  "properties": [
+    {
+      "name": "projeto-api-java.origin-permitida",
+      "type": "java.lang.String",
+      "sourceType": "com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty"
+    },
+    {
+      "name": "projeto-api-java.seguranca.enable-https",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.projeto.projetoapijavaangular.config.property.ProjetoApiJavaAngularProperty$Seguranca"
+    }
+  ],
+  "hints": []
+}
