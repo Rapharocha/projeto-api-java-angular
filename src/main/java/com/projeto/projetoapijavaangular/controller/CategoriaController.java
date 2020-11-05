@@ -55,7 +55,7 @@ public class CategoriaController {
 	public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
 		Optional<Categoria> categoria = categoriaRepository.findById(codigo);
 		
-		return !categoria.isEmpty() ? ResponseEntity.ok().body(categoria) : ResponseEntity.notFound().build() ;
+		return categoria.isPresent() ? ResponseEntity.ok().body(categoria) : ResponseEntity.notFound().build() ;
 	}
 	
 }
