@@ -14,6 +14,6 @@ FOREIGN KEY (codigo_pessoa) REFERENCES pessoa(codigo)
 );
 
 INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria, codigo_pessoa) VALUES
-('Salário mensal', '2017-06-10', null, 6500.00,'Distribuição de Lucros', 'RECEITA', 11, 1),
-('Bahamas', '2017-02-10', '2017-02-10', 100.32,null, 'DESPESA', 6, 3),
-('Extra', '2017-03-10', '2017-03-10', 1000.32,null, 'DESPESA', 10, 4);
+('Salário mensal', '2017-06-10', null, 6500.00,'Distribuição de Lucros', 'RECEITA', 1, 1),
+('Bahamas', '2017-02-10', '2017-02-10', 100.32,null, 'DESPESA', 2 , 3),
+('Extra', '2017-03-10', '2017-03-10', 1000.32,null, 'DESPESA', 4, 2);
