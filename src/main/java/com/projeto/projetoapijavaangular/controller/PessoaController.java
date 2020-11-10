@@ -1,6 +1,5 @@
 package com.projeto.projetoapijavaangular.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projeto.projetoapijavaangular.event.RecursoCriadoEvent;
 import com.projeto.projetoapijavaangular.model.Pessoa;
 import com.projeto.projetoapijavaangular.repository.PessoaRepository;
+import com.projeto.projetoapijavaangular.repository.filter.PessoaFilter;
 import com.projeto.projetoapijavaangular.service.PessoaService;
 
 @RestController
@@ -41,8 +43,8 @@ public class PessoaController {
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
-	public List<Pessoa> listar(){
-	return pessoaRepository.findAll();
+	public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable){
+	return pessoaRepository.filtrar(pessoaFilter, pageable);
 	}
 	
 	@PostMapping
@@ -74,7 +76,7 @@ public class PessoaController {
 	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @Valid @RequestBody Pessoa pessoa){
 		
 		Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
-		
+	
 		return ResponseEntity.ok().body(pessoaSalva);
 	}
 	
